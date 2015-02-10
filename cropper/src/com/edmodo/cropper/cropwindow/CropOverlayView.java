@@ -445,8 +445,8 @@ public class CropOverlayView extends View {
 //            final float verticalPadding = 0.1f * bitmapRect.height();
 
             // DT Custom UI
-            final float horizontalPadding = bitmapRect.width();
-            final float verticalPadding = bitmapRect.height();
+            final float horizontalPadding = 0;
+            final float verticalPadding = 0;
 
             Edge.LEFT.setCoordinate(bitmapRect.left + horizontalPadding);
             Edge.TOP.setCoordinate(bitmapRect.top + verticalPadding);
