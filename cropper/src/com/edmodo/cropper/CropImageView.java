@@ -20,6 +20,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.ExifInterface;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -137,7 +138,7 @@ public class CropImageView extends FrameLayout {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 
         if (mBitmap != null) {
-            final Rect bitmapRect = ImageViewUtil.getBitmapRectCenterInside(mBitmap, this);
+            final Rect bitmapRect = ImageViewUtil.getBitmapRectFitCenter(mBitmap, this);
             mCropOverlayView.setBitmapRect(bitmapRect);
         } else {
             mCropOverlayView.setBitmapRect(EMPTY_RECT);
@@ -201,10 +202,10 @@ public class CropImageView extends FrameLayout {
             mLayoutWidth = width;
             mLayoutHeight = height;
 
-            final Rect bitmapRect = ImageViewUtil.getBitmapRectCenterInside(mBitmap.getWidth(),
-                                                                            mBitmap.getHeight(),
-                                                                            mLayoutWidth,
-                                                                            mLayoutHeight);
+            final Rect bitmapRect = ImageViewUtil.getBitmapRectFitCenter(mBitmap.getWidth(),
+                    mBitmap.getHeight(),
+                    mLayoutWidth,
+                    mLayoutHeight);
             mCropOverlayView.setBitmapRect(bitmapRect);
 
             // MUST CALL THIS
@@ -253,6 +254,14 @@ public class CropImageView extends FrameLayout {
 
         if (mCropOverlayView != null) {
             mCropOverlayView.resetCropOverlayView();
+        }
+    }
+
+    public Bitmap getOriginImageBitmap() {
+        if (mImageView.getDrawable() instanceof BitmapDrawable) {
+            return ((BitmapDrawable) mImageView.getDrawable()).getBitmap();
+        } else {
+            return null;
         }
     }
 
@@ -327,7 +336,7 @@ public class CropImageView extends FrameLayout {
      */
     public Bitmap getCroppedImage() {
 
-        final Rect displayedImageRect = ImageViewUtil.getBitmapRectCenterInside(mBitmap, mImageView);
+        final Rect displayedImageRect = ImageViewUtil.getBitmapRectFitCenter(mBitmap, mImageView);
 
         // Get the scale factor between the actual Bitmap dimensions and the
         // displayed dimensions for width.
@@ -371,7 +380,7 @@ public class CropImageView extends FrameLayout {
      */
     public RectF getActualCropRect() {
 
-        final Rect displayedImageRect = ImageViewUtil.getBitmapRectCenterInside(mBitmap, mImageView);
+        final Rect displayedImageRect = ImageViewUtil.getBitmapRectFitCenter(mBitmap, mImageView);
 
         // Get the scale factor between the actual Bitmap dimensions and the
         // displayed dimensions for width.
@@ -410,6 +419,18 @@ public class CropImageView extends FrameLayout {
                                                actualCropBottom);
 
         return actualCropRect;
+    }
+
+    /**
+     * Gets the crop window's position relative to the parent view.
+     * @return The crop window's position rect relative to the parent view.
+     */
+    public RectF getActualCropRectInParent() {
+        final float cropLeft = Edge.LEFT.getCoordinate();
+        final float cropTop = Edge.TOP.getCoordinate();
+        final float cropRight = Edge.RIGHT.getCoordinate();
+        final float cropBottom = Edge.BOTTOM.getCoordinate();
+        return new RectF(cropLeft, cropTop, cropRight, cropBottom);
     }
 
     /**

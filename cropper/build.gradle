@@ -1,6 +1,7 @@
 apply plugin: 'android-library'
 apply plugin: 'maven'
 apply plugin: 'signing'
+apply plugin: 'maven-publish'
 
 version = "1.0.1"
 group = "com.edmodo"
@@ -40,47 +41,67 @@ task publishLocal(type: Upload) {
     }
 }
 
-uploadArchives {
-    repositories.mavenDeployer {
-        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+publishing {
+    publications {
 
-        repository(url: sonatypeRepo) {
-            authentication(userName: sonatypeUsername,
-                    password: sonatypePassword)
+        repositories.maven {
+            url 'http://maven.dev.duitang.com/nexus/content/repositories/snapshots/'
+            credentials {
+                username "admin"
+                password "A7IaPACIj6uf"
+            }
         }
 
-        pom.project {
-            name 'Cropper'
-            packaging 'aar'
-            description 'Image cropper library for Android applications'
-            url 'https://github.com/edmodo/cropper'
-
-            scm {
-                url 'scm:git@github.com:edmodo/cropper.git'
-                connection 'scm:git@github.com:edmodo/cropper.git'
-                developerConnection 'scm:git@github.com:edmodo/cropper.git'
-            }
-
-            licenses {
-                license {
-                    name 'The Apache Software License, Version 2.0'
-                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    distribution 'repo'
-                }
-            }
-
-            developers {
-                developer {
-                    id 'ahuang13'
-                    name 'Angus Huang'
-                    email 'angus@edmodo.com'
-                }
-                developer {
-                    id 'TT1943'
-                    name 'Xiahong Lin'
-                    email 'xiahong@edmodo.com'
-                }
-            }
+        maven(MavenPublication) {
+            groupId 'com.duitang.adr'
+            artifactId 'cropper'
+            version '1.0.2-SNAPSHOT'
+            artifact 'build/outputs/aar/cropper-release.aar'
         }
     }
 }
+
+//uploadArchives {
+//    repositories.mavenDeployer {
+//        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+//
+//        repository(url: sonatypeRepo) {
+//            authentication(userName: sonatypeUsername,
+//                    password: sonatypePassword)
+//        }
+//
+//        pom.project {
+//            name 'Cropper'
+//            packaging 'aar'
+//            description 'Image cropper library for Android applications'
+//            url 'https://github.com/edmodo/cropper'
+//
+//            scm {
+//                url 'scm:git@github.com:edmodo/cropper.git'
+//                connection 'scm:git@github.com:edmodo/cropper.git'
+//                developerConnection 'scm:git@github.com:edmodo/cropper.git'
+//            }
+//
+//            licenses {
+//                license {
+//                    name 'The Apache Software License, Version 2.0'
+//                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//                    distribution 'repo'
+//                }
+//            }
+//
+//            developers {
+//                developer {
+//                    id 'ahuang13'
+//                    name 'Angus Huang'
+//                    email 'angus@edmodo.com'
+//                }
+//                developer {
+//                    id 'TT1943'
+//                    name 'Xiahong Lin'
+//                    email 'xiahong@edmodo.com'
+//                }
+//            }
+//        }
+//    }
+//}

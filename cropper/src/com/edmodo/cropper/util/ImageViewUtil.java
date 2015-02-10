@@ -130,4 +130,62 @@ public class ImageViewUtil {
 
         return result;
     }
+
+    //By YlorD.
+    public static Rect getBitmapRectFitCenter(Bitmap bitmap, View view) {
+
+        final int bitmapWidth = bitmap.getWidth();
+        final int bitmapHeight = bitmap.getHeight();
+        final int viewWidth = view.getWidth();
+        final int viewHeight = view.getHeight();
+
+        return getBitmapRectFitCenterHelper(bitmapWidth, bitmapHeight, viewWidth, viewHeight);
+    }
+
+    public static Rect getBitmapRectFitCenter(int bitmapWidth,
+                                              int bitmapHeight,
+                                              int viewWidth,
+                                              int viewHeight)
+    {
+        return getBitmapRectFitCenterHelper(bitmapWidth, bitmapHeight, viewWidth, viewHeight);
+    }
+
+    private static Rect getBitmapRectFitCenterHelper(int bitmapWidth,
+                                                     int bitmapHeight,
+                                                     int viewWidth,
+                                                     int viewHeight) {
+        double resultWidth;
+        double resultHeight;
+        int resultX;
+        int resultY;
+
+        double viewToBitmapWidthRatio = (double) viewWidth / (double) bitmapWidth;
+        double viewToBitmapHeightRatio = (double) viewHeight / (double) bitmapHeight;
+
+        if (viewToBitmapWidthRatio <= viewToBitmapHeightRatio) {
+            resultWidth = viewWidth;
+            resultHeight = (bitmapHeight * resultWidth / bitmapWidth);
+        } else {
+            resultHeight = viewHeight;
+            resultWidth = (bitmapWidth * resultHeight / bitmapHeight);
+        }
+
+        if (resultWidth == viewWidth) {
+            resultX = 0;
+            resultY = (int) Math.round((viewHeight - resultHeight) / 2);
+        } else if (resultHeight == viewHeight) {
+            resultX = (int) Math.round((viewWidth - resultWidth) / 2);
+            resultY = 0;
+        } else {
+            resultX = (int) Math.round((viewWidth - resultWidth) / 2);
+            resultY = (int) Math.round((viewHeight - resultHeight) / 2);
+        }
+
+        final Rect result = new Rect(resultX,
+                resultY,
+                resultX + (int) Math.ceil(resultWidth),
+                resultY + (int) Math.ceil(resultHeight));
+
+        return result;
+    }
 }
