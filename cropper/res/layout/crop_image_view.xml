@@ -11,6 +11,11 @@
         tools:ignore="contentDescription"
         android:adjustViewBounds="true" />
 
+    <FrameLayout
+        android:id="@+id/fl_sticker"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <com.edmodo.cropper.cropwindow.CropOverlayView
         android:id="@+id/CropOverlayView"
         android:layout_width="match_parent"

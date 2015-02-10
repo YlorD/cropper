@@ -57,6 +57,7 @@ public class CropImageView extends FrameLayout {
     private static final String DEGREES_ROTATED = "DEGREES_ROTATED";
 
     private ImageView mImageView;
+    private FrameLayout mFlSticker;
     private CropOverlayView mCropOverlayView;
 
     private Bitmap mBitmap;
@@ -486,6 +487,14 @@ public class CropImageView extends FrameLayout {
         mDegreesRotated = mDegreesRotated % 360;
     }
 
+    /**
+     * Get the framelayout that holds the stickers. For nayutas only.
+     * @return the framelayout that holds the stickers
+     */
+    public FrameLayout getFlSticker() {
+        return mFlSticker;
+    }
+
     // Private Methods /////////////////////////////////////////////////////////
 
     private void init(Context context) {
@@ -494,6 +503,8 @@ public class CropImageView extends FrameLayout {
         final View v = inflater.inflate(R.layout.crop_image_view, this, true);
 
         mImageView = (ImageView) v.findViewById(R.id.ImageView_image);
+
+        mFlSticker = (FrameLayout) v.findViewById(R.id.fl_sticker);
 
         setImageResource(mImageResource);
         mCropOverlayView = (CropOverlayView) v.findViewById(R.id.CropOverlayView);
