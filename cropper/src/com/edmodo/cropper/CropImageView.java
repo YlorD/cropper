@@ -249,12 +249,23 @@ public class CropImageView extends FrameLayout {
      * @param bitmap the Bitmap to set
      */
     public void setImageBitmap(Bitmap bitmap) {
+        setImageBitmap(bitmap, false);
+    }
 
+    /**
+     * Sets a Bitmap as the content of the CropImageView.
+     *
+     * @param bitmap the Bitmap to set
+     * @param resetCrop is reset the crop rect or not
+     */
+    public void setImageBitmap(Bitmap bitmap, boolean resetCrop) {
         mBitmap = bitmap;
         mImageView.setImageBitmap(mBitmap);
 
-        if (mCropOverlayView != null) {
-            mCropOverlayView.resetCropOverlayView();
+        if (resetCrop) {
+            if (mCropOverlayView != null) {
+                mCropOverlayView.resetCropOverlayView();
+            }
         }
     }
 
@@ -336,7 +347,10 @@ public class CropImageView extends FrameLayout {
      * @return a new Bitmap representing the cropped image
      */
     public Bitmap getCroppedImage() {
+        return getCroppedImage(mBitmap);
+    }
 
+    public Bitmap getCroppedImage(Bitmap bitmap) {
         final Rect displayedImageRect = ImageViewUtil.getBitmapRectFitCenter(mBitmap, mImageView);
 
         // Get the scale factor between the actual Bitmap dimensions and the
@@ -364,11 +378,11 @@ public class CropImageView extends FrameLayout {
         final float actualCropHeight = cropWindowHeight * scaleFactorHeight;
 
         // Crop the subset from the original Bitmap.
-        final Bitmap croppedBitmap = Bitmap.createBitmap(mBitmap,
-                                                         (int) actualCropX,
-                                                         (int) actualCropY,
-                                                         (int) actualCropWidth,
-                                                         (int) actualCropHeight);
+        final Bitmap croppedBitmap = Bitmap.createBitmap(bitmap,
+                (int) actualCropX,
+                (int) actualCropY,
+                (int) actualCropWidth,
+                (int) actualCropHeight);
 
         return croppedBitmap;
     }

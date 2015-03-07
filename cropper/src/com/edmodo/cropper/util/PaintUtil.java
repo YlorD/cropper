@@ -28,9 +28,12 @@ public class PaintUtil {
     private static final int DEFAULT_CORNER_COLOR = Color.WHITE;
     private static final String SEMI_TRANSPARENT = "#AAFFFFFF";
     private static final String DEFAULT_BACKGROUND_COLOR_ID = "#B0000000";
-    private static final float DEFAULT_LINE_THICKNESS_DP = 3;
+    private static final float DEFAULT_LINE_THICKNESS_DP = 1;
+//    private static final float DEFAULT_LINE_THICKNESS_DP = 3;
     private static final float DEFAULT_CORNER_THICKNESS_DP = 5;
     private static final float DEFAULT_GUIDELINE_THICKNESS_PX = 1;
+
+    private static final String COLOR_DT_WHITE = "#FFFFFF";
 
     // Public Methods //////////////////////////////////////////////////////////
 
@@ -48,7 +51,7 @@ public class PaintUtil {
                                                                 context.getResources().getDisplayMetrics());
 
         final Paint borderPaint = new Paint();
-        borderPaint.setColor(Color.parseColor(SEMI_TRANSPARENT));
+        borderPaint.setColor(Color.parseColor(COLOR_DT_WHITE));
         borderPaint.setStrokeWidth(lineThicknessPx);
         borderPaint.setStyle(Paint.Style.STROKE);
 
@@ -63,7 +66,7 @@ public class PaintUtil {
     public static Paint newGuidelinePaint() {
 
         final Paint paint = new Paint();
-        paint.setColor(Color.parseColor(SEMI_TRANSPARENT));
+        paint.setColor(Color.parseColor(COLOR_DT_WHITE));
         paint.setStrokeWidth(DEFAULT_GUIDELINE_THICKNESS_PX);
 
         return paint;
@@ -97,10 +100,10 @@ public class PaintUtil {
                                                                 DEFAULT_CORNER_THICKNESS_DP,
                                                                 context.getResources().getDisplayMetrics());
 
-        final Paint cornerPaint = new Paint();
+        final Paint cornerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         cornerPaint.setColor(DEFAULT_CORNER_COLOR);
-        cornerPaint.setStrokeWidth(lineThicknessPx);
-        cornerPaint.setStyle(Paint.Style.STROKE);
+//        cornerPaint.setStrokeWidth(lineThicknessPx);
+        cornerPaint.setStyle(Paint.Style.FILL);
 
         return cornerPaint;
     }

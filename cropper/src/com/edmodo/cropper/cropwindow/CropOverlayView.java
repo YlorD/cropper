@@ -51,6 +51,9 @@ public class CropOverlayView extends View {
                                                              + DEFAULT_CORNER_OFFSET_DP;
     private static final float DEFAULT_CORNER_LENGTH_DP = 20;
 
+    //dt custom
+    private static final float DEFAULT_CORNER_RADIUS_DP = 8;
+
     // mGuidelines enumerations
     private static final int GUIDELINES_OFF = 0;
     private static final int GUIDELINES_ON_TOUCH = 1;
@@ -113,6 +116,9 @@ public class CropOverlayView extends View {
     private float mCornerExtension;
     private float mCornerOffset;
     private float mCornerLength;
+
+    //dt custom
+    private float mCornerRadius;
 
     // Constructors ////////////////////////////////////////////////////////////
 
@@ -207,7 +213,7 @@ public class CropOverlayView extends View {
      */
     public void setBitmapRect(Rect bitmapRect) {
         mBitmapRect = bitmapRect;
-        initCropWindow(mBitmapRect);
+//        initCropWindow(mBitmapRect);
     }
 
     /**
@@ -370,6 +376,9 @@ public class CropOverlayView extends View {
         mCornerLength = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                                                   DEFAULT_CORNER_LENGTH_DP,
                                                   displayMetrics);
+        mCornerRadius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                DEFAULT_CORNER_RADIUS_DP,
+                displayMetrics);
 
         // Sets guidelines to default until specified otherwise
         mGuidelines = CropImageView.DEFAULT_GUIDELINES;
@@ -532,44 +541,48 @@ public class CropOverlayView extends View {
         // Draws the corner lines
 
         // Top left
-        canvas.drawLine(left - mCornerOffset,
-                        top - mCornerExtension,
-                        left - mCornerOffset,
-                        top + mCornerLength,
-                        mCornerPaint);
-        canvas.drawLine(left, top - mCornerOffset, left + mCornerLength, top - mCornerOffset, mCornerPaint);
+        canvas.drawCircle(left, top, mCornerRadius, mCornerPaint);
+//        canvas.drawLine(left - mCornerOffset,
+//                        top - mCornerExtension,
+//                        left - mCornerOffset,
+//                        top + mCornerLength,
+//                        mCornerPaint);
+//        canvas.drawLine(left, top - mCornerOffset, left + mCornerLength, top - mCornerOffset, mCornerPaint);
 
         // Top right
-        canvas.drawLine(right + mCornerOffset,
-                        top - mCornerExtension,
-                        right + mCornerOffset,
-                        top + mCornerLength,
-                        mCornerPaint);
-        canvas.drawLine(right, top - mCornerOffset, right - mCornerLength, top - mCornerOffset, mCornerPaint);
+        canvas.drawCircle(right, top, mCornerRadius, mCornerPaint);
+//        canvas.drawLine(right + mCornerOffset,
+//                        top - mCornerExtension,
+//                        right + mCornerOffset,
+//                        top + mCornerLength,
+//                        mCornerPaint);
+//        canvas.drawLine(right, top - mCornerOffset, right - mCornerLength, top - mCornerOffset, mCornerPaint);
 
         // Bottom left
-        canvas.drawLine(left - mCornerOffset,
-                        bottom + mCornerExtension,
-                        left - mCornerOffset,
-                        bottom - mCornerLength,
-                        mCornerPaint);
-        canvas.drawLine(left,
-                        bottom + mCornerOffset,
-                        left + mCornerLength,
-                        bottom + mCornerOffset,
-                        mCornerPaint);
+        canvas.drawCircle(left, bottom, mCornerRadius, mCornerPaint);
+//        canvas.drawLine(left - mCornerOffset,
+//                        bottom + mCornerExtension,
+//                        left - mCornerOffset,
+//                        bottom - mCornerLength,
+//                        mCornerPaint);
+//        canvas.drawLine(left,
+//                        bottom + mCornerOffset,
+//                        left + mCornerLength,
+//                        bottom + mCornerOffset,
+//                        mCornerPaint);
 
         // Bottom left
-        canvas.drawLine(right + mCornerOffset,
-                        bottom + mCornerExtension,
-                        right + mCornerOffset,
-                        bottom - mCornerLength,
-                        mCornerPaint);
-        canvas.drawLine(right,
-                        bottom + mCornerOffset,
-                        right - mCornerLength,
-                        bottom + mCornerOffset,
-                        mCornerPaint);
+        canvas.drawCircle(right, bottom, mCornerRadius, mCornerPaint);
+//        canvas.drawLine(right + mCornerOffset,
+//                        bottom + mCornerExtension,
+//                        right + mCornerOffset,
+//                        bottom - mCornerLength,
+//                        mCornerPaint);
+//        canvas.drawLine(right,
+//                        bottom + mCornerOffset,
+//                        right - mCornerLength,
+//                        bottom + mCornerOffset,
+//                        mCornerPaint);
 
     }
 

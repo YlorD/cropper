@@ -45,7 +45,7 @@ publishing {
     publications {
 
         repositories.maven {
-            url 'http://maven.dev.duitang.com/nexus/content/repositories/snapshots/'
+            url 'http://maven.dev.duitang.com/nexus/content/repositories/releases/'
             credentials {
                 username "admin"
                 password "A7IaPACIj6uf"
@@ -55,7 +55,7 @@ publishing {
         maven(MavenPublication) {
             groupId 'com.duitang.adr'
             artifactId 'cropper'
-            version '1.0.2-SNAPSHOT'
+            version '1.9.0'
             artifact 'build/outputs/aar/cropper-release.aar'
         }
     }
